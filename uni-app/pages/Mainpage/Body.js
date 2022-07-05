@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import ImageLoader from "./image_loader";
 
 const Container = React.forwardRef((props, ref) => {
     return (
@@ -9,17 +10,14 @@ const Container = React.forwardRef((props, ref) => {
     );
 } )
 
+
+
 export default function Body () {
     const lazyRoot = React.useRef(null)
 
     return (
         <div className="Body">
-            <div className="Image" style={{display: 'Grid'}}>
-               {/* <Container ref={lazyRoot}>
-                    <Image lazyRoot={lazyRoot} src="/North_campus_map.png" width="500" height="500" /> 
-               </Container> */}
-               <img src="/North_campus_map.png"></img>
-            </div>
+               <ImageLoader/>
         </div>
     );
 }
