@@ -6,6 +6,7 @@ export default function Home() {
     <div className='Mainpage'>
       <Header />
       <Body />
+      
     </div>
   )
 }
