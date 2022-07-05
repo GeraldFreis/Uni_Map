@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import ImageLoader from "./image_loader";
 
 const Container = React.forwardRef((props, ref) => {
     return (
@@ -15,12 +16,7 @@ export default function Body () {
 
     return (
         <div className="Body">
-            <div className="Image" style={{display: 'flex'}}>
-               {/* <Container ref={lazyRoot}>
-                    <Image lazyRoot={lazyRoot} src="/North_campus_map.png" width="500" height="500" /> 
-               </Container> */}
-               <MyImage />
-            </div>
+               <ImageLoader/>
         </div>
     );
 }
