@@ -1,1 +1,1 @@
-console.open(Pathway.png)
+
