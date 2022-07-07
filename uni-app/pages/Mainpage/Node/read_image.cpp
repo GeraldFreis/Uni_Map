@@ -2,15 +2,28 @@
 #include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../../node_modules/stb/stb_image.h"
-#include <cmath>
+#include <fstream>
+#include <istream>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "../../../node_modules/stb/stb_image_write.h"
 
+int* rgb_image_size(){
+    int width, height, bpp;
 
-int main() {
+    uint8_t* rgb_image = stbi_load("map.png", &width, &height, &bpp, 1); // loading the image as uint8 type
+    stbi_image_free(rgb_image);
+
+    int *arr = new int[2];
+    arr[0] = width;
+    arr[1] = height;
+
+    return arr;
+}
+
+uint8_t **opening_image(uint8_t** image_matrix){
     int width, height, bpp, row = 1, column = 0;
 
-    uint8_t* rgb_image = stbi_load("Pathway.png", &width, &height, &bpp, 3); // loading the image as uint8 type
-    uint8_t **image_matrix =  new uint8_t*[height];
-    for(int i = 0; i < width; i++){image_matrix[i] = new uint8_t[width];}
+    uint8_t* rgb_image = stbi_load("map.png", &width, &height, &bpp, 1); // loading the image as uint8 type
 
     for(int i = 0; i < width*height; i++){
         if(i == (row * width) - 1){
@@ -28,13 +41,51 @@ int main() {
     for(int r = 0; r < width; r++){
         for(int c = 0; c < width; c++){
             if(image_matrix[r][c] == 0){
-                std::cout << image_matrix[r][c] << "\n";
+                std::cout << r << " " << c << "\n";
             }
         }
     }
-
     stbi_image_free(rgb_image);
+    return image_matrix;
+}
 
-    
-    return 0;
+void writingtodoc(uint8_t** image_matrix, int width, int height){
+
+    std::ofstream MyFile("co_ordinates.txt");
+
+  // Write to the file
+  for(int i = 0; i < width; i++){
+    for(int j  = 0; j < height; j++){
+
+        if(image_matrix[i][j] <=10){
+            MyFile << i << ' ' << j << '\n';
+        }
+    }
+  }
+
+  // Close the file
+  MyFile.close();
+}
+
+void get_image(int width, int height, uint8_t** image_matrix){
+    for (int r = 0; r < width; r++){
+        for (int c = 0; c<height; c++){
+            if (image_matrix[r][c] <=10){
+                image_matrix[r][c] = 128;
+            }
+
+        }
+    }
+
+    uint8_t *One_D_array= new uint8_t [2250000];
+
+    for (int r = 0; r < 1500; r++){
+        for (int c = 0; c<1500; c++){
+            One_D_array[r+c] = image_matrix[r][c];
+        }
+    }
+
+    stbi_write_png("Change_Way.png", width/2, height/3, 2, One_D_array, 3*width);
+ 
+
 }
