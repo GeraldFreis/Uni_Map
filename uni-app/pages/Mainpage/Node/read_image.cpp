@@ -38,15 +38,6 @@ uint8_t **opening_image(uint8_t** image_matrix){
             column++;
         }
     }   
-
-    // int counter = 0;
-    // for(int r = 0; r < width; r++){
-    //     for(int c = 0; c < width; c++){
-    //         if(image_matrix[r][c] == 0){
-    //             std::cout << r << " " << c << "\n";
-    //         }
-    //     }
-    // }
     stbi_image_free(rgb_image);
     return image_matrix;
 }
