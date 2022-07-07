@@ -67,25 +67,31 @@ void writingtodoc(uint8_t** image_matrix, int width, int height){
   MyFile.close();
 }
 
-void get_image(int width, int height, uint8_t** image_matrix){
+
+/*Get 2D image, in which the pixcel with 10 or less will be converted in gray colour, 
+and then convert this image to 1D array with gray colour, 
+and creat this image
+*/
+void get_image(int width, int height, uint8_t** image_matrix){  
     for (int r = 0; r < width; r++){
         for (int c = 0; c<height; c++){
-            if (image_matrix[r][c] <=10){
-                image_matrix[r][c] = 128;
+            if (image_matrix[r][c] <=10){ //If the pixcel is 10 or less, the if statement is going to run
+                image_matrix[r][c] = 128; // Let all possible pixcel 10 or less comveted to gray colour
             }
 
         }
     }
 
-    uint8_t *One_D_array= new uint8_t [2250000];
+    uint8_t *One_D_array= new uint8_t [2250000]; //Create a 1D array to pass the .png
 
     for (int r = 0; r < 1500; r++){
         for (int c = 0; c<1500; c++){
-            One_D_array[r+c] = image_matrix[r][c];
+            One_D_array[r+c] = image_matrix[r][c]; //Convert 2D image to 1D array
         }
     }
 
-    stbi_write_png("Change_Way.png", width/2, height/3, 2, One_D_array, 3*width);
+    stbi_write_png("Change_Way.png", width/2, height/3, 2, One_D_array, 3*width); //Create an image to be converted to gray image
+    delete[] One_D_array;
  
 
 }
