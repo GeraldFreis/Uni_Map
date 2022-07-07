@@ -5,7 +5,7 @@ export default function  ImageLoader () {
     return(
         <div className = 'image' style ={{display:'flex', justifyContent:'center',
                                             maxWidth: '100', width: 'auto', height: 'auto'}}>
-            <button onClick={get('./Node/a.out')} >
+            <button onClick={console.log("Clicked")} >
                 <Image
                 src = '/North_Campus_Map.png'
                 width = '1500px'
