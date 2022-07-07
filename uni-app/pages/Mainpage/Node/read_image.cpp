@@ -28,10 +28,10 @@ uint8_t **opening_image(uint8_t** image_matrix){
     uint8_t* rgb_image = stbi_load("map.png", &width, &height, &bpp, 1); // loading the image as uint8 type
 
     for(int i = 0; i < width*height; i++){
-        if(i == (row * width) - 1){
+        if(i == (row * width) - 1){ // if the current index is a multiple of the width - 1 we have to reset the index values
             image_matrix[row-1][column] = rgb_image[i];
-            column = 0;
-            row++;
+            column = 0; // resetting the column to zero everytime we hit the column total
+            row++; // incrementing the row everytime we hit a multiple of 1500 as that should be a new row
         }
         else {
             image_matrix[row-1][column] = rgb_image[i];
