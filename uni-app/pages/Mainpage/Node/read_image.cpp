@@ -21,7 +21,9 @@ int* rgb_image_size(){
     return arr;
 }
 
-// getting the pixel data from the map image and transferring that into a 2D array
+/* getting the pixel data from the map image and transferring that into a 2D array
+returns the 2D array
+*/
 uint8_t **opening_image(uint8_t** image_matrix){
     int width, height, bpp, row = 1, column = 0;
 
@@ -42,22 +44,23 @@ uint8_t **opening_image(uint8_t** image_matrix){
     return image_matrix;
 }
 
+// writing the image to a text document
 void writingtodoc(uint8_t** image_matrix, int width, int height){
 
     std::ofstream MyFile("co_ordinates.txt");
 
-  // Write to the file
-  for(int i = 0; i < width; i++){
-    for(int j  = 0; j < height; j++){
+    // Write to the file
+    for(int i = 0; i < width; i++){
+        for(int j  = 0; j < height; j++){
 
-        if(image_matrix[i][j] <=10){
-            MyFile << i << ' ' << j << '\n';
+            if(image_matrix[i][j] <=10){
+                MyFile << i << ' ' << j << '\n';
+            }
         }
     }
-  }
 
-  // Close the file
-  MyFile.close();
+    // Close the file
+    MyFile.close();
 }
 
 void get_image(int width, int height, uint8_t** image_matrix){
