@@ -7,64 +7,60 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../../../node_modules/stb/stb_image_write.h"
 
+// retrieving the image size (returns two element array containing width and height)
 int* rgb_image_size(){
     int width, height, bpp;
 
     uint8_t* rgb_image = stbi_load("map.png", &width, &height, &bpp, 1); // loading the image as uint8 type
     stbi_image_free(rgb_image);
 
-    int *arr = new int[2];
+    int *arr = new int[2]; 
     arr[0] = width;
     arr[1] = height;
 
     return arr;
 }
 
+/* getting the pixel data from the map image and transferring that into a 2D array
+returns the 2D array
+*/
 uint8_t **opening_image(uint8_t** image_matrix){
     int width, height, bpp, row = 1, column = 0;
 
     uint8_t* rgb_image = stbi_load("map.png", &width, &height, &bpp, 1); // loading the image as uint8 type
 
     for(int i = 0; i < width*height; i++){
-        if(i == (row * width) - 1){
+        if(i == (row * width) - 1){ // if the current index is a multiple of the width - 1 we have to reset the index values
             image_matrix[row-1][column] = rgb_image[i];
-            column = 0;
-            row++;
+            column = 0; // resetting the column to zero everytime we hit the column total
+            row++; // incrementing the row everytime we hit a multiple of 1500 as that should be a new row
         }
         else {
             image_matrix[row-1][column] = rgb_image[i];
             column++;
         }
     }   
-
-    int counter = 0;
-    for(int r = 0; r < width; r++){
-        for(int c = 0; c < width; c++){
-            if(image_matrix[r][c] == 0){
-                std::cout << r << " " << c << "\n";
-            }
-        }
-    }
     stbi_image_free(rgb_image);
     return image_matrix;
 }
 
+// writing the image to a text document
 void writingtodoc(uint8_t** image_matrix, int width, int height){
 
     std::ofstream MyFile("co_ordinates.txt");
 
-  // Write to the file
-  for(int i = 0; i < width; i++){
-    for(int j  = 0; j < height; j++){
+    // Write to the file
+    for(int i = 0; i < width; i++){
+        for(int j  = 0; j < height; j++){
 
-        if(image_matrix[i][j] <=10){
-            MyFile << i << ' ' << j << '\n';
+            if(image_matrix[i][j] <=10){
+                MyFile << i << ' ' << j << '\n';
+            }
         }
     }
-  }
 
-  // Close the file
-  MyFile.close();
+    // Close the file
+    MyFile.close();
 }
 
 
@@ -78,7 +74,6 @@ void get_image(int width, int height, uint8_t** image_matrix){
             if (image_matrix[r][c] <=10){ //If the pixcel is 10 or less, the if statement is going to run
                 image_matrix[r][c] = 128; // Let all possible pixcel 10 or less comveted to gray colour
             }
-
         }
     }
 

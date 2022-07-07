@@ -13,9 +13,9 @@ int main() {
 
     image_matrix = opening_image(image_matrix);
 
-    writingtodoc(image_matrix, width, height);
+    // writingtodoc(image_matrix, width, height);
 
-    get_image(width, height, image_matrix);
+    // get_image(width, height, image_matrix);
 
     for(int i = 0; i < width; i++){delete [] image_matrix[i];}
     delete [] image_matrix;
