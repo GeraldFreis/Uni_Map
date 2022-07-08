@@ -135,7 +135,6 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
   }
 
   else if (direction == "U") {
-    if(current_y - 2 >= 0){
         if ((pixel_matrix[current_y - 1][current_x] <= 10 ||
             pixel_matrix[current_y - 1][current_x - 1] <= 10 ||
             pixel_matrix[current_y - 1][current_x + 1] <= 10 ||
@@ -149,7 +148,7 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
     }
   }
 
-  else if (direction == "L") {
+  else if (direction == "R") {
     if (pixel_matrix[current_y][current_x - 1] <= 10 ||
         pixel_matrix[current_y - 1][current_x - 1] <= 10 ||
         pixel_matrix[current_y - 1][current_x - 2] <= 10 ||
@@ -162,7 +161,7 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
     }
   }
 
-  else if (direction == "R") {
+  else if (direction == "L") {
         if (pixel_matrix[current_y][current_x + 1] <= 10 ||
             pixel_matrix[current_y + 1][current_x + 1] <= 10 ||
             (current_y-2>=0 && (pixel_matrix[current_y-2][current_x+2] <= 10))||
