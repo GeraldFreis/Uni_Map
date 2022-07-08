@@ -150,13 +150,13 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
     int current_x = current_point->x; int current_y = current_point->y;
 
     if(direction  == "L"){
-        if(pixel_matrix[current_point->x][current_point->y-1] <= 30){ 
+        if(pixel_matrix[current_point->x][current_point->y-1] <= 20){ 
             changed_point.x = current_point->x; changed_point.y = current_point->y-1;
         }
-        else if(pixel_matrix[current_point->x-1][current_point->y-1] <= 30) {
+        else if(pixel_matrix[current_point->x-1][current_point->y-1] <= 20) {
             changed_point.x = current_point->x - 1; changed_point.y = current_point->y - 1;
         }
-        else if(pixel_matrix[current_point->x+1][current_point->y-1] <= 30) {
+        else if(pixel_matrix[current_point->x+1][current_point->y-1] <= 20) {
             changed_point.x = current_point->x + 1; changed_point.y = current_point->y + 1;
         }
 
