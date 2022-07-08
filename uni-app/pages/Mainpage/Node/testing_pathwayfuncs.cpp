@@ -13,6 +13,7 @@ int main() {
     for(int i = 0; i < width; i++){image_matrix[i] = new uint8_t[width];}
 
     image_matrix = opening_image(image_matrix);
+    std::vector<Point> points_passed;
 
     // writingtodoc(image_matrix, width, height);
 
@@ -25,7 +26,7 @@ int main() {
 
         // getting middle point
         Point middle_point = middle_point_calc(&end_point, &current_point);
-        std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
+        // std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
 
         // getting direction to middle point
         std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point);
@@ -44,8 +45,11 @@ int main() {
         // changing to the closest pixel
         Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
         std::cout << "The chosen point is: "<< changed_point.x << " " << changed_point.y << "\n";
+        
         current_point.x = changed_point.x;
         current_point.y = changed_point.y;
+
+        points_passed.push_back(current_point);
     }
 
     for(int i = 0; i < width; i++){delete [] image_matrix[i];}
