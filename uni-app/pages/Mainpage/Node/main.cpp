@@ -1,4 +1,5 @@
 #include <iostream>
+#include "pathway_funcs.cpp"
 extern uint8_t **opening_image(uint8_t**);
 extern int* rgb_image_size();
 extern void writingtodoc(uint8_t**, int, int);
