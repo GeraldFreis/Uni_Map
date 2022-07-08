@@ -13,6 +13,10 @@ struct Point
     int x;
     int y;
 
+    // constructors
+    Point(int _x, int _y){x = _x; y = _y;}
+    Point(){x = 0; y = 0;}
+
     // creating a vector between two points
     Point operator-(const Point& p){
         Point newpoint;
@@ -31,8 +35,8 @@ struct Point
     // calculating the middlepoint between two points / pixels
     Point calcmiddle(const Point *p){
         Point newpoint;
-        newpoint.x = 0.5 * (p->x - this->x);
-        newpoint.y = 0.5 * (p->y - this->y);
+        newpoint.x = p->x - 0.5 * (p->x - this->x);
+        newpoint.y = p->y - 0.5 * (p->y - this->y);
         return newpoint;
     }
 };
@@ -76,6 +80,13 @@ std::string direction_to_middle_p(uint8_t **pixel_matrix, Point *middle_point, P
     else if(distance_up > distance_left && distance_up > distance_right && distance_down < distance_up){
         return "U";
     }
+    // maybe change this as we do not always want to choose left or right
+    else if(distance_left == distance_up || distance_left == distance_down){
+        return "L";
+    }
+    else if(distance_right== distance_up || distance_right == distance_down){
+        return "R";
+    }
     else {
         return "Some values were equal";
     }
@@ -91,7 +102,7 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point, Point *current_point)
     int middle_x = middle_point->x; int middle_y = middle_point->y;
 
     std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point);
-    std::cout << direction << "\n";
+    // std::cout << direction << "\n";
     if(direction != "Some values were equal"){return true;} else {return false;}
 
     // checking if any pixels in the direction returned were / are black
