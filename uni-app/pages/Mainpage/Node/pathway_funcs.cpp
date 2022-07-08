@@ -70,26 +70,34 @@ std::string direction_to_middle_p(uint8_t **pixel_matrix, Point *middle_point,
   int middle_y = middle_point->y;
 
   // finding distances to the middle point
-  int distance_left =
-      sqrt(pow(middle_x - (current_x - 1), 2) + pow(middle_y - (current_y), 2));
   int distance_right =
+      sqrt(pow(middle_x - (current_x - 1), 2) + pow(middle_y - (current_y), 2));
+  int distance_left =
       sqrt(pow(middle_x - (current_x + 1), 2) + pow(middle_y - (current_y), 2));
   int distance_up =
       sqrt(pow(middle_x - (current_x), 2) + pow(middle_y - (current_y - 1), 2));
   int distance_down =
       sqrt(pow(middle_x - (current_x), 2) + pow(middle_y - (current_y + 1), 2));
 
+
   if (distance_left > distance_right && distance_left > distance_down &&
       distance_left > distance_up) {
+        // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "L";
+
   } else if (distance_right > distance_left && distance_right > distance_down &&
              distance_right > distance_up) {
+            // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "R";
+
   } else if (distance_down > distance_left && distance_right < distance_down &&
              distance_down > distance_up) {
+            // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "D";
+
   } else if (distance_up > distance_left && distance_up > distance_right &&
              distance_down < distance_up) {
+            // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "U";
   }
   // maybe change this as we do not always want to choose left or right
