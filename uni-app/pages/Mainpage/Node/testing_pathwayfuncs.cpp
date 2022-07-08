@@ -13,19 +13,20 @@ int main() {
     for(int i = 0; i < width; i++){image_matrix[i] = new uint8_t[width];}
 
     image_matrix = opening_image(image_matrix);
+    std::vector<Point> points_passed;
 
     // writingtodoc(image_matrix, width, height);
 
     // get_image(width, height, image_matrix);
     // end_point = 6, 1008, initial_point = 1, 1011
-    Point end_point(13, 1000);
+    Point end_point(126, 889);
     Point current_point(1, 1011);
     while(current_point.x != end_point.x && current_point.y != end_point.y && current_point.x > 0 && current_point.y > 0){
         // std::cout << end_point.x << " " << end_point.y << "\n";
 
         // getting middle point
         Point middle_point = middle_point_calc(&end_point, &current_point);
-        std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
+        // std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
 
         // getting direction to middle point
         std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point, &end_point);
@@ -44,9 +45,26 @@ int main() {
         // changing to the closest pixel
         Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
         std::cout << "The chosen point is: "<< changed_point.x << " " << changed_point.y << "\n";
+        
         current_point.x = changed_point.x;
         current_point.y = changed_point.y;
+
+        points_passed.push_back(current_point);
     }
+
+    for(auto &a: points_passed){
+        // getting the current x and y and updating that pixel in the image
+        image_matrix[a.y][a.x] = 255;
+        image_matrix[a.y-1][a.x] = 255;
+        image_matrix[a.y+1][a.x] = 255;
+        image_matrix[a.y][a.x+1] = 255;
+        // image_matrix[a.y][a.x-1] = 255;
+        // image_matrix[a.y+1][a.x-1] = 255;
+        // image_matrix[a.y+1][a.x+1] = 255;
+    }
+
+    get_image(width, height, image_matrix);
+
 
     for(int i = 0; i < width; i++){delete [] image_matrix[i];}
     delete [] image_matrix;
