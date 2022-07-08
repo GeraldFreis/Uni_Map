@@ -55,9 +55,9 @@ int main() {
     for(auto &a: points_passed){
         // getting the current x and y and updating that pixel in the image
         image_matrix[a.y][a.x] = 255;
-        image_matrix[a.y-1][a.x] = 255;
-        image_matrix[a.y+1][a.x] = 255;
-        image_matrix[a.y][a.x+1] = 255;
+        // image_matrix[a.y-1][a.x] = 255;
+        // image_matrix[a.y+1][a.x] = 255;
+        // image_matrix[a.y][a.x+1] = 255;
         // image_matrix[a.y][a.x-1] = 255;
         // image_matrix[a.y+1][a.x-1] = 255;
         // image_matrix[a.y+1][a.x+1] = 255;
