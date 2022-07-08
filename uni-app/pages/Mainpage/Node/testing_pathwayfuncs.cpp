@@ -20,7 +20,7 @@ int main() {
     // end_point = 6, 1008, initial_point = 1, 1011
     Point end_point(6, 1008);
     Point current_point(1, 1011);
-    while(current_point.x != end_point.x && current_point.y != end_point.y){
+    while(current_point.x != end_point.x && current_point.y != end_point.y && current_point.x > 0 && current_point.y > 0){
         // std::cout << end_point.x << " " << end_point.y << "\n";
 
         // getting middle point
