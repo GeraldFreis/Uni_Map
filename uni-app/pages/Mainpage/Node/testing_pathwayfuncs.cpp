@@ -26,11 +26,11 @@ int main() {
 
         // getting middle point
         Point middle_point = middle_point_calc(&end_point, &current_point);
-        // std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
+        std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
 
         // getting direction to middle point
         std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point, &end_point);
-        // std::cout << direction << "\n";
+        std::cout << direction << "\n";
 
         // checking if there are black pixels around current_point in direction of middle point
         bool ifblk = if_black(image_matrix, &middle_point, &current_point,&end_point);
@@ -52,18 +52,18 @@ int main() {
         points_passed.push_back(current_point);
     }
 
-    for(auto &a: points_passed){
-        // getting the current x and y and updating that pixel in the image
-        image_matrix[a.y][a.x] = 255;
-        image_matrix[a.y-1][a.x] = 255;
-        image_matrix[a.y+1][a.x] = 255;
-        image_matrix[a.y][a.x+1] = 255;
-        // image_matrix[a.y][a.x-1] = 255;
-        // image_matrix[a.y+1][a.x-1] = 255;
-        // image_matrix[a.y+1][a.x+1] = 255;
-    }
+    // for(auto &a: points_passed){
+    //     // getting the current x and y and updating that pixel in the image
+    //     image_matrix[a.y][a.x] = 255;
+    //     // image_matrix[a.y-1][a.x] = 255;
+    //     // image_matrix[a.y+1][a.x] = 255;
+    //     // image_matrix[a.y][a.x+1] = 255;
+    //     // image_matrix[a.y][a.x-1] = 255;
+    //     // image_matrix[a.y+1][a.x-1] = 255;
+    //     // image_matrix[a.y+1][a.x+1] = 255;
+    // }
 
-    get_image(width, height, image_matrix);
+    // get_image(width, height, image_matrix);
 
 
     for(int i = 0; i < width; i++){delete [] image_matrix[i];}
