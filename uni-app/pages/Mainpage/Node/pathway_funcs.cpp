@@ -103,30 +103,34 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point, Point *current_point)
 
     std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point);
     // std::cout << direction << "\n";
-    if(direction != "Some values were equal"){return true;} else {return false;}
+    if(direction == "Some values were equal"){return false;}
 
     // checking if any pixels in the direction returned were / are black
     if(direction == "D"){
-        if(pixel_matrix[current_x][current_y+1] == 0 || pixel_matrix[current_x+1][current_y+1] == 0 || 
-                    pixel_matrix[current_x-1][current_y+1] == 0){
+        if(pixel_matrix[current_x+1][current_y] == 0 || pixel_matrix[current_x+1][current_y+1] == 0 || 
+                    pixel_matrix[current_x+1][current_y-1] == 0){
             return true;
         }
     }
+
     else if(direction == "U"){
-        if(pixel_matrix[current_x][current_y-1] == 0 || pixel_matrix[current_x+1][current_y-1] == 0 || 
-                    pixel_matrix[current_x-1][current_y-1] == 0){
-            return true;
-        }
-    }
-    else if(direction == "L"){
         if(pixel_matrix[current_x-1][current_y] == 0 || pixel_matrix[current_x-1][current_y-1] == 0 || 
                     pixel_matrix[current_x-1][current_y+1] == 0){
             return true;
         }
     }
+
+    else if(direction == "L"){
+        if(pixel_matrix[current_x][current_y-1] <= 30 || pixel_matrix[current_x-1][current_y-1] <= 30 || 
+                    pixel_matrix[current_x+1][current_y-1] <= 30){
+            
+            return true;
+        }
+    }
+    
     else if(direction == "R") {
-        if(pixel_matrix[current_x+1][current_y] == 0 || pixel_matrix[current_x+1][current_y-1] == 0 || 
-                    pixel_matrix[current_x+1][current_y+1] == 0){
+        if(pixel_matrix[current_x][current_y+1] == 0 || pixel_matrix[current_x+1][current_y+1] == 0 || 
+                    pixel_matrix[current_x-1][current_y+1] == 0){
             return true;
         }
     }
@@ -143,21 +147,40 @@ Postconditions -> a point (this will be the new point)
 */
 Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std::string direction){
     Point changed_point;
+    int current_x = current_point->x; int current_y = current_point->y;
+
     if(direction  == "L"){
-        changed_point.x = current_point->x - 1; changed_point.y = current_point->y;
+        if(pixel_matrix[current_point->x][current_point->y-1] <= 30){ 
+            changed_point.x = current_point->x; changed_point.y = current_point->y-1;
+        }
+        else if(pixel_matrix[current_point->x-1][current_point->y-1] <= 30) {
+            changed_point.x = current_point->x - 1; changed_point.y = current_point->y - 1;
+        }
+        else if(pixel_matrix[current_point->x+1][current_point->y-1] <= 30) {
+            changed_point.x = current_point->x + 1; changed_point.y = current_point->y + 1;
+        }
+
+        else {
+            std::cout << "Left should not have been called (moving_to_closest_pixel)" << "\n";
+        }
     }
+
     else if(direction  == "R"){
         changed_point.x = current_point->x + 1; changed_point.y = current_point->y;
     }
+
     else if(direction  == "D"){
         changed_point.x = current_point->x; changed_point.y = current_point->y + 1;
     }
+
     else if(direction  == "U"){
         changed_point.x = current_point->x; changed_point.y = current_point->y - 1;
     }
+
     else {
         std::cout << "Invalid direction" << "\n";
         changed_point.x = 0; changed_point.y = 0;
     }
+
     return changed_point;
 }
