@@ -69,13 +69,13 @@ and then convert this image to 1D array with gray colour,
 and creat this image
 */
 void get_image(int width, int height, uint8_t** image_matrix){  
-    for (int r = 0; r < width; r++){
-        for (int c = 0; c<height; c++){
-            if (image_matrix[r][c] <=10){ //If the pixcel is 10 or less, the if statement is going to run
-                image_matrix[r][c] = 128; // Let all possible pixcel 10 or less comveted to gray colour
-            }
-        }
-    }
+    // for (int r = 0; r < width; r++){
+    //     for (int c = 0; c<height; c++){
+    //         if (image_matrix[r][c] <=10){ //If the pixcel is 10 or less, the if statement is going to run
+    //             image_matrix[r][c] = 128; // Let all possible pixcel 10 or less comveted to gray colour
+    //         }
+    //     }
+    // }
 
     uint8_t *One_D_array= new uint8_t [2250000]; //Create a 1D array to pass the .png
 
