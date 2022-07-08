@@ -107,30 +107,30 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point, Point *current_point)
 
     // checking if any pixels in the direction returned were / are black
     if(direction == "D"){
-        if(pixel_matrix[current_x+1][current_y] == 0 || pixel_matrix[current_x+1][current_y+1] == 0 || 
-                    pixel_matrix[current_x+1][current_y-1] == 0){
+        if(pixel_matrix[current_y+1][current_x] == 0 || pixel_matrix[current_y+1][current_x+1] == 0 || 
+                    pixel_matrix[current_y+1][current_x-1] == 0){
             return true;
         }
     }
 
     else if(direction == "U"){
-        if(pixel_matrix[current_x-1][current_y] == 0 || pixel_matrix[current_x-1][current_y-1] == 0 || 
-                    pixel_matrix[current_x-1][current_y+1] == 0){
+        if(pixel_matrix[current_y-1][current_x] == 0 || pixel_matrix[current_y-1][current_x-1] == 0 || 
+                    pixel_matrix[current_y-1][current_x+1] == 0){
             return true;
         }
     }
 
     else if(direction == "L"){
-        if(pixel_matrix[current_x][current_y-1] <= 30 || pixel_matrix[current_x-1][current_y-1] <= 30 || 
-                    pixel_matrix[current_x+1][current_y-1] <= 30){
+        if(pixel_matrix[current_y][current_x-1] <= 30 || pixel_matrix[current_y-1][current_x-1] <= 30 || 
+                    pixel_matrix[current_y+1][current_x-1] <= 30){
             
             return true;
         }
     }
     
     else if(direction == "R") {
-        if(pixel_matrix[current_x][current_y+1] == 0 || pixel_matrix[current_x+1][current_y+1] == 0 || 
-                    pixel_matrix[current_x-1][current_y+1] == 0){
+        if(pixel_matrix[current_y][current_x+1] == 0 || pixel_matrix[current_y+1][current_x+1] == 0 || 
+                    pixel_matrix[current_y-1][current_x+1] == 0){
             return true;
         }
     }
@@ -150,14 +150,14 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
     int current_x = current_point->x; int current_y = current_point->y;
 
     if(direction  == "L"){
-        if(pixel_matrix[current_point->x][current_point->y-1] <= 30){ 
-            changed_point.x = current_point->x; changed_point.y = current_point->y-1;
+        if(pixel_matrix[current_point->y][current_point->x-1] <= 10){ 
+            changed_point.y = current_point->y; changed_point.x = current_point->x-1;
         }
-        else if(pixel_matrix[current_point->x-1][current_point->y-1] <= 30) {
-            changed_point.x = current_point->x - 1; changed_point.y = current_point->y - 1;
+        else if(pixel_matrix[current_point->y-1][current_point->x-1] <= 10) {
+            changed_point.y = current_point->y - 1; changed_point.x = current_point->x - 1;
         }
-        else if(pixel_matrix[current_point->x+1][current_point->y-1] <= 30) {
-            changed_point.x = current_point->x + 1; changed_point.y = current_point->y + 1;
+        else if(pixel_matrix[current_point->y+1][current_point->x-1] <= 10) {
+            changed_point.y = current_point->y + 1; changed_point.x = current_point->x - 1;
         }
 
         else {
@@ -166,17 +166,55 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
     }
 
     else if(direction  == "R"){
-        changed_point.x = current_point->x + 1; changed_point.y = current_point->y;
+        // changed_point.x = current_point->x + 1; changed_point.y = current_point->y;
+        if(pixel_matrix[current_point->y][current_point->x+1] <= 10){ 
+            changed_point.y = current_point->y; changed_point.x = current_point->x+1;
+        }
+        else if(pixel_matrix[current_point->y-1][current_point->x+1] <= 10) {
+            changed_point.y = current_point->y - 1; changed_point.x = current_point->x + 1;
+        }
+        else if(pixel_matrix[current_point->y+1][current_point->x+1] <= 10) {
+            changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 1;
+        }
+
+        else {
+            std::cout << "Right should not have been called (moving_to_closest_pixel)" << "\n";
+        }
     }
 
     else if(direction  == "D"){
-        changed_point.x = current_point->x; changed_point.y = current_point->y + 1;
+        // changed_point.x = current_point->x; changed_point.y = current_point->y + 1;
+        if(pixel_matrix[current_point->y+1][current_point->x] <= 10){ 
+            changed_point.y = current_point->y+1; changed_point.x = current_point->x;
+        }
+        else if(pixel_matrix[current_point->y+1][current_point->x-1] <= 10) {
+            changed_point.y = current_point->y + 1; changed_point.x = current_point->x - 1;
+        }
+        else if(pixel_matrix[current_point->y+1][current_point->x+1] <= 10) {
+            changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 1;
+        }
+
+        else {
+            std::cout << "Down should not have been called (moving_to_closest_pixel)" << "\n";
+        }
     }
 
     else if(direction  == "U"){
-        changed_point.x = current_point->x; changed_point.y = current_point->y - 1;
-    }
+        // changed_point.x = current_point->x; changed_point.y = current_point->y - 1;
+        if(pixel_matrix[current_point->y-1][current_point->x] <= 10){ 
+            changed_point.y = current_point->y - 1; changed_point.x = current_point->x;
+        }
+        else if(pixel_matrix[current_point->y-1][current_point->x-1] <= 10) {
+            changed_point.y = current_point->y - 1; changed_point.x = current_point->x - 1;
+        }
+        else if(pixel_matrix[current_point->y-1][current_point->x+1] <= 10) {
+            changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 1;
+        }
 
+        else {
+            std::cout << "Up should not have been called (moving_to_closest_pixel)" << "\n";
+        }
+    }
     else {
         std::cout << "Invalid direction" << "\n";
         changed_point.x = 0; changed_point.y = 0;

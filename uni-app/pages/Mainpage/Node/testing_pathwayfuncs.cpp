@@ -20,29 +20,33 @@ int main() {
     // end_point = 6, 1008, initial_point = 1, 1011
     Point end_point(6, 1008);
     Point current_point(1, 1011);
-    std::cout << end_point.x << " " << end_point.y << "\n";
+    while(current_point.x != end_point.x && current_point.y != end_point.y){
+        // std::cout << end_point.x << " " << end_point.y << "\n";
 
-    // getting middle point
-    Point middle_point = middle_point_calc(&end_point, &current_point);
-    std::cout <<middle_point.x << " " << middle_point.y << "\n";
+        // getting middle point
+        Point middle_point = middle_point_calc(&end_point, &current_point);
+        // std::cout <<middle_point.x << " " << middle_point.y << "\n";
 
-    // getting direction to middle point
-    std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point);
-    std::cout << direction << "\n";
+        // getting direction to middle point
+        std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point);
+        // std::cout << direction << "\n";
 
-    // checking if there are black pixels around current_point in direction of middle point
-    bool ifblk = if_black(image_matrix, &middle_point, &current_point);
-    if(ifblk == false){
-        std::cout << "false" << "\n";
+        // checking if there are black pixels around current_point in direction of middle point
+        bool ifblk = if_black(image_matrix, &middle_point, &current_point);
+        if(ifblk == false){
+             std::cout << "false" << "\n";
+             break;
+        }
+        // else {
+        //     std::cout << "true" << "\n";
+        // }
+
+        // changing to the closest pixel
+        Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
+        std::cout << changed_point.x << " " << changed_point.y << "\n";
+        current_point.x = changed_point.x;
+        current_point.y = changed_point.y;
     }
-    else {
-        std::cout << "true" << "\n";
-    }
-
-    // changing to the closest pixel
-    Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
-    std::cout << changed_point.x << " " << changed_point.y << "\n";
-
 
     for(int i = 0; i < width; i++){delete [] image_matrix[i];}
     delete [] image_matrix;
