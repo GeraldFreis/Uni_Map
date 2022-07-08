@@ -163,6 +163,24 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
                 changed_point.y = current_point->y + 1; changed_point.x = current_point->x - 1;
             }
 
+            else if(pixel_matrix[current_point->y][current_point->x-2] <= 10){ 
+                changed_point.y = current_point->y; changed_point.x = current_point->x-2;
+            }
+            else if(pixel_matrix[current_point->y-1][current_point->x-2] <= 10) {
+                changed_point.y = current_point->y - 1; changed_point.x = current_point->x - 2;
+            }
+            else if(pixel_matrix[current_point->y+1][current_point->x-2] <= 10) {
+                changed_point.y = current_point->y + 1; changed_point.x = current_point->x - 2;
+            }
+
+            else if(pixel_matrix[current_point->y-2][current_point->x-2] <= 10) {
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x - 2;
+            }
+            else if(pixel_matrix[current_point->y+2][current_point->x-2] <= 10) {
+                changed_point.y = current_point->y + 2; changed_point.x = current_point->x - 2;
+            }
+
+
             else {
                 std::cout << "Left should not have been called (moving_to_closest_pixel)" << "\n";
             }
@@ -180,6 +198,22 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
                 changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 1;
             }
 
+            else if(pixel_matrix[current_point->y][current_point->x+2] <= 10){ 
+                changed_point.y = current_point->y; changed_point.x = current_point->x+2;
+            }
+            else if(pixel_matrix[current_point->y-1][current_point->x+2] <= 10) {
+                changed_point.y = current_point->y - 1; changed_point.x = current_point->x + 2;
+            }
+            else if(pixel_matrix[current_point->y+1][current_point->x+2] <= 20 ) {
+                changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 2;
+            }
+            
+            else if(pixel_matrix[current_point->y-2][current_point->x+2] <= 10) {
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x + 2;
+            }
+            else if(pixel_matrix[current_point->y+2][current_point->x+2] <= 20 ) {
+                changed_point.y = current_point->y + 2; changed_point.x = current_point->x + 2;
+            }
             else {
                 std::cout << "Right should not have been called (moving_to_closest_pixel)" << "\n";
             }
@@ -195,6 +229,23 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
             }
             else if(pixel_matrix[current_point->y+1][current_point->x+1] <= 10) {
                 changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 1;
+            }
+
+            else if(pixel_matrix[current_point->y+2][current_point->x] <= 10){ 
+                changed_point.y = current_point->y+2; changed_point.x = current_point->x;
+            }
+            else if(pixel_matrix[current_point->y+2][current_point->x-1] <= 10) {
+                changed_point.y = current_point->y + 2; changed_point.x = current_point->x - 1;
+            }
+            else if(pixel_matrix[current_point->y+2][current_point->x+1] <= 10) {
+                changed_point.y = current_point->y + 2; changed_point.x = current_point->x + 1;
+            }
+
+            else if(pixel_matrix[current_point->y+2][current_point->x-2] <= 10) {
+                changed_point.y = current_point->y + 2; changed_point.x = current_point->x - 2;
+            }
+            else if(pixel_matrix[current_point->y+2][current_point->x+1] <= 10) {
+                changed_point.y = current_point->y + 2; changed_point.x = current_point->x + 2;
             }
 
             else {
@@ -213,6 +264,25 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
             else if(pixel_matrix[current_point->y-1][current_point->x+1] <= 10) {
                 changed_point.y = current_point->y + 1; changed_point.x = current_point->x + 1;
             }
+
+            else if(pixel_matrix[current_point->y-2][current_point->x] <= 10){ 
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x;
+            }
+            else if(pixel_matrix[current_point->y-2][current_point->x-1] <= 10) {
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x - 1;
+            }
+            else if(pixel_matrix[current_point->y-2][current_point->x+1] <= 10) {
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x + 1;
+            }
+
+            else if(pixel_matrix[current_point->y-2][current_point->x-1] <= 10) {
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x - 2;
+            }
+            else if(pixel_matrix[current_point->y-2][current_point->x+1] <= 10) {
+                changed_point.y = current_point->y - 2; changed_point.x = current_point->x + 2;
+            }
+
+
 
             else {
                 std::cout << "Up should not have been called (moving_to_closest_pixel)" << "\n";
