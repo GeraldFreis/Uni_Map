@@ -40,8 +40,8 @@ struct Point {
   // calculating the middlepoint between two points / pixels
   Point calcmiddle(const Point *p) {
     Point newpoint;
-    newpoint.x = p->x - 0.5 * (p->x - this->x);
-    newpoint.y = p->y - 0.5 * (p->y - this->y);
+    newpoint.x = p->x - 0.25 * (p->x - this->x);
+    newpoint.y = p->y - 0.25 * (p->y - this->y);
     return newpoint;
   }
 };
