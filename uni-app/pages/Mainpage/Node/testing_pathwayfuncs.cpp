@@ -28,11 +28,11 @@ int main() {
         std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
 
         // getting direction to middle point
-        std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point);
+        std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point, &end_point);
         // std::cout << direction << "\n";
 
         // checking if there are black pixels around current_point in direction of middle point
-        bool ifblk = if_black(image_matrix, &middle_point, &current_point);
+        bool ifblk = if_black(image_matrix, &middle_point, &current_point,&end_point);
         if(ifblk == false){
              std::cout << "false" << "\n";
              break;

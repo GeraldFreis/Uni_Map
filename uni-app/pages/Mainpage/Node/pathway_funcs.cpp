@@ -63,40 +63,71 @@ to current_point Postcondition -> returns a string either 'L', 'R', 'U', 'D' to
 signify the direction of middle point from current point
 */
 std::string direction_to_middle_p(uint8_t **pixel_matrix, Point *middle_point,
-                                  Point *current_point) {
+                                  Point *current_point, Point* end_point) {
   int current_x = current_point->x;
   int current_y = current_point->y;
   int middle_x = middle_point->x;
   int middle_y = middle_point->y;
 
   // finding distances to the middle point
-  int distance_left =
-      sqrt(pow(middle_x - (current_x - 1), 2) + pow(middle_y - (current_y), 2));
   int distance_right =
+      sqrt(pow(middle_x - (current_x - 1), 2) + pow(middle_y - (current_y), 2));
+  int distance_left =
       sqrt(pow(middle_x - (current_x + 1), 2) + pow(middle_y - (current_y), 2));
   int distance_up =
       sqrt(pow(middle_x - (current_x), 2) + pow(middle_y - (current_y - 1), 2));
   int distance_down =
       sqrt(pow(middle_x - (current_x), 2) + pow(middle_y - (current_y + 1), 2));
+   int distance_left_to_final = sqrt((pow(end_point->x-(current_x - 1),2))+(pow(end_point->y-(current_y),2)));
+   int distance_down_to_final = sqrt((pow(end_point->x-current_x,2))+(pow(end_point->y-(current_y+1),2)));
+
+   int distance_right_to_final = sqrt((pow(end_point->x-(current_x+1),2))+(pow(end_point->y-(current_y),2)));
+   int distance_up_to_final = sqrt((pow(end_point->x-(current_x),2))+(pow(end_point->y-(current_y-1),2)));
+  
+
 
   if (distance_left > distance_right && distance_left > distance_down &&
       distance_left > distance_up) {
+        // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "L";
+
   } else if (distance_right > distance_left && distance_right > distance_down &&
              distance_right > distance_up) {
+            // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "R";
+
   } else if (distance_down > distance_left && distance_right < distance_down &&
              distance_down > distance_up) {
+            // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "D";
+
   } else if (distance_up > distance_left && distance_up > distance_right &&
              distance_down < distance_up) {
+            // std::cout << distance_left << " " << distance_right << " " << distance_down << " "<< distance_up << "\n";
     return "U";
   }
   // maybe change this as we do not always want to choose left or right
   else if (distance_left == distance_up || distance_left == distance_down) {
-    return "L";
+    if (distance_left_to_final < distance_down_to_final){
+        return "L";
+    }
+    else{
+        return "D";
+    }
   } else if (distance_right == distance_up || distance_right == distance_down) {
-    return "D";
+    if (distance_right_to_final < distance_up_to_final && distance_right_to_final < distance_down_to_final){
+        return "R";
+    }
+    else if(distance_down_to_final<distance_right_to_final && distance_down_to_final<distance_up_to_final){
+        return "D";
+    }
+    else if(distance_up_to_final<distance_right_to_final && distance_up_to_final<distance_down_to_final){
+        return "U";
+    }
+    else{
+        return "R";
+    }
+
   } else {
     return "Some values were equal";
   }
@@ -108,14 +139,14 @@ end point is black Preconditions -> reference to pixel matrix, reference to
 current point, reference to middle point Postconditions -> returns bool
 */
 bool if_black(uint8_t **pixel_matrix, Point *middle_point,
-              Point *current_point) {
+              Point *current_point, Point *end_point) {
 
   int current_x = current_point->x;
   int current_y = current_point->y;
   int middle_x = middle_point->x;
   int middle_y = middle_point->y;
 
-  std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point);
+  std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point,end_point);
   // std::cout << direction << "\n";
   if (direction == "Some values were equal") {
     return false;
@@ -146,7 +177,6 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
         return true;
         }
     }
-  }
 
   else if (direction == "R") {
     if (pixel_matrix[current_y][current_x - 1] <= 10 ||
