@@ -96,7 +96,7 @@ std::string direction_to_middle_p(uint8_t **pixel_matrix, Point *middle_point,
   else if (distance_left == distance_up || distance_left == distance_down) {
     return "L";
   } else if (distance_right == distance_up || distance_right == distance_down) {
-    return "R";
+    return "D";
   } else {
     return "Some values were equal";
   }
@@ -109,18 +109,17 @@ current point, reference to middle point Postconditions -> returns bool
 */
 bool if_black(uint8_t **pixel_matrix, Point *middle_point,
               Point *current_point) {
+
   int current_x = current_point->x;
   int current_y = current_point->y;
   int middle_x = middle_point->x;
   int middle_y = middle_point->y;
 
-  std::string direction =
-      direction_to_middle_p(pixel_matrix, middle_point, current_point);
+  std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point);
   // std::cout << direction << "\n";
   if (direction == "Some values were equal") {
     return false;
   }
-
   // checking if any pixels in the direction returned were / are black
   if (direction == "D") {
     if (pixel_matrix[current_y + 1][current_x] <= 10 ||
@@ -136,15 +135,17 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
   }
 
   else if (direction == "U") {
-    if (pixel_matrix[current_y - 1][current_x] <= 10 ||
-        pixel_matrix[current_y - 1][current_x - 1] <= 10 ||
-        pixel_matrix[current_y - 2][current_x - 1] <= 10 ||
-        pixel_matrix[current_y - 2][current_x + 1] <= 10 ||
-        pixel_matrix[current_y - 2][current_x - 2] <= 10 ||
-        pixel_matrix[current_y - 2][current_x + 2] <= 10 ||
-        pixel_matrix[current_y - 1][current_x + 1] <= 10 ||
-        pixel_matrix[current_y-2][current_x] <= 10){
-      return true;
+    if(current_y - 2 >= 0){
+        if ((pixel_matrix[current_y - 1][current_x] <= 10 ||
+            pixel_matrix[current_y - 1][current_x - 1] <= 10 ||
+            pixel_matrix[current_y - 1][current_x + 1] <= 10 ||
+            pixel_matrix[current_y - 2][current_x - 1] <= 10 ||
+            pixel_matrix[current_y - 2][current_x + 1] <= 10 ||
+            pixel_matrix[current_y - 2][current_x - 2] <= 10 ||
+            pixel_matrix[current_y - 2][current_x + 2] <= 10 ||
+            pixel_matrix[current_y - 2][current_x] <= 10)){
+        return true;
+        }
     }
   }
 
@@ -152,26 +153,27 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
     if (pixel_matrix[current_y][current_x - 1] <= 10 ||
         pixel_matrix[current_y - 1][current_x - 1] <= 10 ||
         pixel_matrix[current_y - 1][current_x - 2] <= 10 ||
-        pixel_matrix[current_y - 2][current_x - 2] <= 10 ||
+        ((current_y-2>=0) && (pixel_matrix[current_y - 2][current_x - 2] <= 10 )) ||
         pixel_matrix[current_y][current_x - 2] <= 10 ||
         pixel_matrix[current_y + 1][current_x - 2] <=10 ||
         pixel_matrix[current_y + 1][current_x - 1] <= 10 ||
         pixel_matrix[current_y+2][current_x-2] <= 10) {
-      return true;
+    return true;
     }
   }
 
   else if (direction == "R") {
-    if (pixel_matrix[current_y][current_x + 1] <= 10 ||
-        pixel_matrix[current_y + 1][current_x + 1] <= 10 ||
-        pixel_matrix[current_y-2][current_x+2] <= 10 ||
-        pixel_matrix[current_y+2][current_x+2] <= 10 ||
-        pixel_matrix[current_y-1][current_x+2] <= 10 ||
-        pixel_matrix[current_y+1][current_x+2] <= 10 ||
-        pixel_matrix[current_y - 1][current_x + 1] <= 10 ||
-        pixel_matrix[current_y][current_x+2] <= 10) {
-      return true;
-    }
+        if (pixel_matrix[current_y][current_x + 1] <= 10 ||
+            pixel_matrix[current_y + 1][current_x + 1] <= 10 ||
+            (current_y-2>=0 && (pixel_matrix[current_y-2][current_x+2] <= 10))||
+            pixel_matrix[current_y+2][current_x+2] <= 10 ||
+            pixel_matrix[current_y-1][current_x+2] <= 10 ||
+            pixel_matrix[current_y+1][current_x+2] <= 10 ||
+            pixel_matrix[current_y - 1][current_x + 1] <= 10 ||
+            pixel_matrix[current_y][current_x+2] <= 10) {
+        return true;
+        }
+
   } else {
     std::cout << "exception should have been caught (if_black function)"
               << "\n";

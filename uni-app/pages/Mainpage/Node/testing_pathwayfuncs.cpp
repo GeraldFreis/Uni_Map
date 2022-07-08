@@ -25,7 +25,7 @@ int main() {
 
         // getting middle point
         Point middle_point = middle_point_calc(&end_point, &current_point);
-        // std::cout <<middle_point.x << " " << middle_point.y << "\n";
+        std::cout << "The middle point is: "<< middle_point.x << " " << middle_point.y << "\n";
 
         // getting direction to middle point
         std::string direction = direction_to_middle_p(image_matrix, &middle_point, &current_point);
@@ -43,7 +43,7 @@ int main() {
 
         // changing to the closest pixel
         Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
-        std::cout << changed_point.x << " " << changed_point.y << "\n";
+        std::cout << "The chosen point is: "<< changed_point.x << " " << changed_point.y << "\n";
         current_point.x = changed_point.x;
         current_point.y = changed_point.y;
     }
