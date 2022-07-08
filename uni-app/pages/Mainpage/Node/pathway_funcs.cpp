@@ -143,8 +143,8 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
         pixel_matrix[current_y - 2][current_x - 2] <= 10 ||
         pixel_matrix[current_y - 2][current_x + 2] <= 10 ||
         pixel_matrix[current_y - 1][current_x + 1] <= 10 ||
-        pixel_matrix[current_y-2][current_x] <= 10){
-      return true;
+        pixel_matrix[current_y - 2][current_x] <= 10){
+    return true;
     }
   }
 
@@ -156,7 +156,7 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
         pixel_matrix[current_y][current_x - 2] <= 10 ||
         pixel_matrix[current_y + 1][current_x - 2] <=10 ||
         pixel_matrix[current_y + 1][current_x - 1] <= 10 ||
-        pixel_matrix[current_y+2][current_x-2] <= 10) {
+        pixel_matrix[current_y + 2][current_x-2] <= 10) {
       return true;
     }
   }
