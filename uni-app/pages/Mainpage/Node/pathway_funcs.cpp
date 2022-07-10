@@ -30,10 +30,17 @@ struct Point {
     return newpoint;
   }
 
-  Point operator=(const Point &last_point) {
+    // testing if two points are equivalent
+  bool operator==(const Point &last_point) {
+    if(this->x == last_point.x && this->y == last_point.y){
+        return true;
+
+    }
+    return false;
+  }
+  Point operator=(const Point &last_point){
     Point newpoint;
-    newpoint.x = last_point.x;
-    newpoint.y = last_point.y;
+    newpoint.x = last_point.x; newpoint.y = last_point.y;
     return newpoint;
   }
 
