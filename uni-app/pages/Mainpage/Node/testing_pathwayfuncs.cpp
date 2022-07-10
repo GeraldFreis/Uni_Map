@@ -21,7 +21,8 @@ int main() {
     // end_point = 6, 1008, initial_point = 1, 1011
     Point end_point(134, 75);
     Point current_point(1, 1011);
-    while(current_point.x != end_point.x && current_point.y != end_point.y && current_point.x > 0 && current_point.y > 0){
+    // current_point.x != end_point.x && current_point.y != end_point.y && current_point.x > 0 && current_point.y > 0
+    while((current_point != end_point) == false){
         // std::cout << end_point.x << " " << end_point.y << "\n";
 
         // getting middle point
@@ -36,7 +37,7 @@ int main() {
         bool ifblk = if_black(image_matrix, &middle_point, &current_point,&end_point);
         if(ifblk == false){
              std::cout << "false" << "\n";
-             break;
+            //  break;
         }
         // else {
         //     std::cout << "true" << "\n";
@@ -44,7 +45,7 @@ int main() {
 
         // changing to the closest pixel
         Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
-        std::cout << "The chosen point is: "<< changed_point.x << " " << changed_point.y << "\n";
+        std::cout << "The chosen point is: " << changed_point.x << " " << changed_point.y << "\n\n";
         
         current_point.x = changed_point.x;
         current_point.y = changed_point.y;
@@ -64,6 +65,10 @@ int main() {
     //     // image_matrix[a.y][a.x-1] = 255;
     //     // image_matrix[a.y+1][a.x-1] = 255;
     //     // image_matrix[a.y+1][a.x+1] = 255;
+    // }
+
+    // for(auto &a: points_passed){
+    //     std::cout << a.x << " "<< a.y << "\n";
     // }
 
     // get_image(width, height, image_matrix);

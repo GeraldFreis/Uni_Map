@@ -44,11 +44,20 @@ struct Point {
     return newpoint;
   }
 
+  bool operator!=(const Point &last_point){
+    if(this->x != last_point.x || this->y != last_point.y){
+        return false;
+    }
+    else {
+        return true;
+    }
+  }
+
   // calculating the middlepoint between two points / pixels
   Point calcmiddle(const Point *p) {
     Point newpoint;
-    newpoint.x = p->x - 0.25 * (p->x - this->x);
-    newpoint.y = p->y - 0.25 * (p->y - this->y);
+    newpoint.x = p->x - 0.03125 * (p->x - this->x) / 2;
+    newpoint.y = p->y - 0.03125 * (p->y - this->y) / 2;
     return newpoint;
   }
 };
@@ -115,11 +124,17 @@ std::string direction_to_middle_p(uint8_t **pixel_matrix, Point *middle_point,
   }
   // maybe change this as we do not always want to choose left or right
   else if (distance_left == distance_up || distance_left == distance_down) {
-    if (distance_left_to_final < distance_down_to_final){
+    if (distance_left_to_final < distance_down_to_final && distance_left_to_final < distance_up_to_final){
         return "L";
     }
-    else{
+    else if(distance_up_to_final < distance_down_to_final && distance_up_to_final < distance_left_to_final){
+        return "U";
+    }
+    else if(distance_down_to_final < distance_left_to_final && distance_down_to_final < distance_up_to_final){
         return "D";
+    }
+    else {
+        return "L";
     }
   } else if (distance_right == distance_up || distance_right == distance_down) {
     if (distance_right_to_final < distance_up_to_final && distance_right_to_final < distance_down_to_final){
@@ -154,7 +169,7 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
   int middle_y = middle_point->y;
 
   std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point,end_point);
-  // std::cout << direction << "\n";
+  std::cout << direction << "\n";
   if (direction == "Some values were equal") {
     return false;
   }
@@ -259,6 +274,9 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
                 changed_point.y = current_point->y + 2; changed_point.x = current_point->x - 2;
             }
 
+            else if(pixel_matrix[current_point->y+1][current_point->x] <= 10) {
+                changed_point.y = current_point->y + 1; changed_point.x = current_point->x;
+            }
 
             else {
                 std::cout << "Left should not have been called (moving_to_closest_pixel)" << "\n";
@@ -360,9 +378,6 @@ Point moving_to_closest_pixel(uint8_t **pixel_matrix, Point *current_point, std:
             else if(pixel_matrix[current_point->y-2][current_point->x+1] <= 10) {
                 changed_point.y = current_point->y - 2; changed_point.x = current_point->x + 2;
             }
-
-
-
             else {
                 std::cout << "Up should not have been called (moving_to_closest_pixel)" << "\n";
             }
