@@ -169,7 +169,7 @@ bool if_black(uint8_t **pixel_matrix, Point *middle_point,
   int middle_y = middle_point->y;
 
   std::string direction = direction_to_middle_p(pixel_matrix, middle_point, current_point,end_point);
-  std::cout << direction << "\n";
+//   std::cout << direction << "\n";
   if (direction == "Some values were equal") {
     return false;
   }
