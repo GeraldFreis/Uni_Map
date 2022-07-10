@@ -1,5 +1,7 @@
 #include <iostream>
 #include "pathway_funcs.cpp"
+#include <algorithm>
+#include <vector>
 extern uint8_t **opening_image(uint8_t**);
 extern int* rgb_image_size();
 extern void writingtodoc(uint8_t**, int, int);
@@ -19,7 +21,7 @@ int main() {
 
     // get_image(width, height, image_matrix);
     // end_point = 6, 1008, initial_point = 1, 1011
-    Point end_point(146, 872);
+    Point end_point(256, 924);
     Point current_point(1, 1011);
     // current_point.x != end_point.x && current_point.y != end_point.y && current_point.x > 0 && current_point.y > 0
     while((current_point != end_point) == false){
@@ -47,13 +49,23 @@ int main() {
         Point changed_point = moving_to_closest_pixel(image_matrix, &current_point, direction);
         std::cout << "The chosen point is: " << changed_point.x << " " << changed_point.y << "\n\n";
         
-        current_point.x = changed_point.x;
-        current_point.y = changed_point.y;
+        // current_point.x = changed_point.x;
+        // current_point.y = changed_point.y;
 
-        points_passed.push_back(current_point);
+        // checking if the current point is in the point vector and if so ending the while loop
+        if(find(points_passed.begin(), points_passed.end(), changed_point)!= points_passed.end()){
+            break;
+        } else { // if this is the first time the current point has been passed
+            current_point.x = changed_point.x;
+            current_point.y = changed_point.y;
+            points_passed.push_back(current_point);
+        }
+        
     }
     if(current_point == end_point){
         std::cout << "Route finished" << "\n";
+    } else {
+        std::cout << "\nSomething failed\n" << "Size of points vector: " << points_passed.size() << "\n";
     }
 
     // for(auto &a: points_passed){
